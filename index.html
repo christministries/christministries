@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noah's Ark - Detailed Telugu Story</title>
+    <title>Noah's Ark - Telugu Voice Story</title>
     <style>
-        /* Basic page styling for clean look */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e9ecef;
+            background-color: #f4f6f9;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,355 +16,256 @@
             padding: 20px;
         }
 
-        h1 { color: #2c3e50; margin-bottom: 10px; text-align: center;}
-        p.subtitle { color: #7f8c8d; margin-bottom: 25px; text-align: center; max-width: 600px;}
+        h1 { color: #2c3e50; margin-bottom: 5px; text-align: center; }
 
-        /* The main container for the story presentation */
+        /* Status Bar for Voice Debugging */
+        #voice-status {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+            color: #555;
+        }
+        .status-ok { background-color: #d4edda !important; color: #155724 !important; border: 1px solid #c3e6cb; }
+        .status-err { background-color: #f8d7da !important; color: #721c24 !important; border: 1px solid #f5c6cb; }
+
         #story-canvas {
             background-color: #ffffff;
-            width: 900px; /* Slightly wider for detailed text */
+            width: 900px;
             max-width: 100%;
-            height: auto;
-            min-height: 650px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* Area for the scenario image */
         #image-stage {
-            height: 400px;
-            background-color: #333;
+            height: 450px;
+            background-color: #222;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            border-bottom: 3px solid #3498db;
         }
 
         #story-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures image fills space without stretching */
-            transition: opacity 0.5s ease;
+            object-fit: contain; 
         }
 
-        /* Area for the detailed Telugu text */
         #caption-area {
-            flex-grow: 1;
-            padding: 25px 30px;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 25px;
             text-align: center;
+            min-height: 150px;
         }
 
         #telugu-caption {
-            font-size: 1.3rem;
-            color: #34495e;
-            font-weight: 500;
-            line-height: 1.6; /* Better readability for longer text */
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         #english-sub {
-            font-size: 0.95rem;
-            color: #95a5a6;
+            font-size: 1rem;
+            color: #7f8c8d;
             font-style: italic;
         }
 
-        /* Controls Section */
-        .controls-area {
-            margin-top: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            width: 100%;
-            max-width: 900px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .buttons {
+        .controls {
+            margin-top: 20px;
             display: flex;
             gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         button {
-            padding: 12px 28px;
+            padding: 12px 30px;
             font-size: 1.1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.1s, background-color 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
         }
-        
-        button:active { transform: scale(0.98); box-shadow: none; }
+        button:active { transform: scale(0.95); }
 
-        #start-btn { background: linear-gradient(to right, #2ecc71, #27ae60); color: white; }
-        #next-btn { background: linear-gradient(to right, #3498db, #2980b9); color: white; }
-        #next-btn:disabled { background: #bdc3c7; cursor: not-allowed; background-image: none;}
-        
-        /* Voice Selection Styling */
-        .voice-settings-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .voice-settings {
-            background: #f8f9fa;
-            padding: 8px 15px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        #start-btn { background-color: #28a745; color: white; }
+        #next-btn { background-color: #007bff; color: white; }
+        #next-btn:disabled { background-color: #ccc; cursor: not-allowed; }
 
-        #voice-info-note {
-            font-size: 0.85rem;
-            color: #e74c3c;
-            margin-top: 5px;
-            text-align: center;
-        }
-        
-        select {
-            padding: 6px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            max-width: 350px;
-        }
     </style>
 </head>
 <body>
 
-    <h1>Noah's Ark Story (నోవహు ఓడ కథ)</h1>
-    <p class="subtitle">A detailed retelling with scenario images and Telugu voice over.</p>
+    <h1>Noah's Ark (నోవహు ఓడ)</h1>
+    <div id="voice-status">Checking for Telugu Voice Support...</div>
 
     <div id="story-canvas">
         <div id="image-stage">
-            <img id="story-image" src="https://placehold.co/900x400/34495e/FFFFFF?text=Welcome.+Ensure+volume+is+up+and+click+Start." alt="Story Scene">
+            <img id="story-image" src="image_8.png" alt="Story Scene">
         </div>
         <div id="caption-area">
-            <div id="telugu-caption">కథ ప్రారంభించడానికి మరియు ఆడియో వినడానికి క్రింద ఉన్న 'Start Story' బటన్‌ను క్లిక్ చేయండి.</div>
-            <div id="english-sub">Click the 'Start Story' button below to begin listening to the detailed narrative.</div>
+            <div id="telugu-caption">కథ వినడానికి 'Start Story' క్లిక్ చేయండి.</div>
+            <div id="english-sub">Click 'Start Story' to listen to the narration.</div>
         </div>
     </div>
 
-    <div class="controls-area">
-        <div class="voice-settings-container">
-             <div class="voice-settings">
-                <label for="voiceSelect">🔊 Voice Selection:</label>
-                <select id="voiceSelect"><option>Loading voices...</option></select>
-            </div>
-            <div id="voice-info-note">Note: Quality depends on your device. Android/Chrome usually provides the best female Telugu voice.</div>
-        </div>
-
-        <div class="buttons">
-            <button id="start-btn" onclick="startStory()">Start Story ▶</button>
-            <button id="next-btn" onclick="nextScene()" disabled>Next Scene ➡</button>
-        </div>
+    <div class="controls">
+        <button id="start-btn" onclick="startStory()">Start Story ▶</button>
+        <button id="next-btn" onclick="nextScene()" disabled>Next Scene ➡</button>
     </div>
 
     <script>
-        // ==========================================
-        // DETAILED STORY DATA WITH SCENARIO PROMPTS
-        // ==========================================
+        // STORY DATA
         const storyData = [
             {
-                // Scene 1: The Command to Build
-                // Scenario: A wide shot of Noah and his sons constructing a massive wooden skeletal frame of a three-deck ark in a dry, dusty landscape under a hot sun.
-                image: "https://placehold.co/900x400/8B4513/FFFFFF?text=Scenario:+Noah+and+sons+building+massive+wooden+ark+frame+in+dry+land",
-                telugu: "పూర్వకాలంలో, భూమిపై మనుషుల పాపం పెరిగిపోయినప్పుడు, దేవుడు వారిని చూసి దుఃఖించాడు. కానీ నోవహు అనే ఒక నీతిమంతుడు దేవుని దృష్టిలో దయ పొందాడు. దేవుడు నోవహుకు రాబోయే జలప్రళయం గురించి హెచ్చరించి, తన కుటుంబాన్ని రక్షించుకోవడానికి గోఫరు మ్రానుతో మూడు అంతస్తుల పెద్ద ఓడను కట్టమని నిర్దిష్టమైన కొలతలతో ఆజ్ఞాపించాడు. నోవహు దేవునికి భయపడి, తన కుమారులతో కలిసి ఎన్నో సంవత్సరాలు కష్టపడి ఆ గొప్ప ఓడను సిద్ధం చేశాడు.",
-                english: "(Summary: God saw wickedness but chose righteous Noah. He commanded Noah to build a massive three-deck ark to save his family from a coming flood. Noah obediently spent years building it.)"
+                image: "image_4.png",
+                // Split text into array for smoother reading
+                teluguSentences: [
+                    "పూర్వకాలంలో, భూమిపై మనుషుల పాపం పెరిగినప్పుడు దేవుడు వారిని చూసి దుఃఖించాడు.",
+                    "కానీ నోవహు అనే ఒక నీతిమంతుడు దేవుని దృష్టిలో దయ పొందాడు.",
+                    "దేవుడు నోవహుకు రాబోయే జలప్రళయం గురించి హెచ్చరించి, ఒక పెద్ద ఓడను కట్టమని ఆజ్ఞాపించాడు.",
+                    "నోవహు దేవునికి భయపడి, తన కుమారులతో కలిసి ఆ గొప్ప ఓడను సిద్ధం చేశాడు."
+                ],
+                english: "God warned righteous Noah to build a massive ark to save his family. Noah obediently built it in the desert."
             },
             {
-                // Scene 2: The Animals Enter
-                // Scenario: The completed ark stands ready with a large ramp. A peaceful procession of diverse animals—lions, elephants, giraffes, birds—marches two by two up the ramp into the ark, guided by unseen forces.
-                image: "https://placehold.co/900x400/228B22/FFFFFF?text=Scenario:+Completed+Ark+with+ramp.+Animals(lions,elephants,birds)+entering+two-by-two",
-                telugu: "ఓడ నిర్మాణం పూర్తయిన తర్వాత, దేవుడు నోవహును ఓడలోకి ప్రవేశించమని చెప్పాడు. అద్భుతమైన రీతిలో, భూమిపై ఉన్న అన్ని రకాల జంతువులు, పక్షులు, మరియు పాకే పురుగులు జంటలు జంటలుగా నోవహు దగ్గరకు వచ్చి శాంతంగా ఓడలోకి ప్రవేశించాయి. నోవహు, అతని భార్య, ముగ్గురు కుమారులు మరియు వారి భార్యలు చివరిగా లోపలికి వెళ్ళిన తరువాత, దేవుడే స్వయంగా ఓడ తలుపును బయట నుండి మూసివేశాడు.",
-                english: "(Summary: The ark was finished. Animals miraculously arrived two by two and peacefully entered the ark. Once Noah's family was inside, God shut the door.)"
+                image: "image_5.png",
+                teluguSentences: [
+                    "ఓడ నిర్మాణం పూర్తయిన తర్వాత, దేవుడు నోవహును ఓడలోకి వెళ్ళమని చెప్పాడు.",
+                    "అద్భుతమైన రీతిలో, అన్ని రకాల జంతువులు మరియు పక్షులు జంటలు జంటలుగా ఓడలోకి వచ్చాయి.",
+                    "నోవహు కుటుంబం లోపలికి వెళ్ళిన తరువాత, దేవుడే స్వయంగా ఓడ తలుపును మూసివేశాడు."
+                ],
+                english: "Animals miraculously arrived two by two and entered the ark peacefully. God shut the door behind them."
             },
             {
-                // Scene 3: The Great Flood Rising
-                // Scenario: A dark, chaotic scene. Torrential rain pours from black clouds. The ark is afloat on rough, rising floodwaters that have nearly covered mountain peaks. Lightning flashes in the distance.
-                image: "https://placehold.co/900x400/00008B/FFFFFF?text=Scenario:+Dark+storm,+heavy+rain.+Ark+floating+on+rough+water+covering+mountains",
-                telugu: "ఏడవ రోజున, ఆకాశం యొక్క తూములు విప్పబడ్డాయి మరియు మహాగాధ జలధారలు ఉబికివచ్చాయి. నలభై పగలు మరియు నలభై రాత్రులు భయంకరమైన వర్షం భూమిపై కురిసింది. వరద నీరు పెరిగి, ఎత్తైన పర్వతాలను కూడా ముంచేసింది. భూమిపై ఉన్న జీవరాశులన్నీ నశించిపోయాయి. కానీ, ఆ భయంకరమైన తుఫాను మధ్యలో, నోవహు మరియు అతనితో ఉన్నవారందరూ ఓడలో సురక్షితంగా నీటిపై తేలియాడారు.",
-                english: "(Summary: Torrential rain fell for 40 days. The floodwaters rose, covering mountains and destroying life on earth. But Noah and those in the ark floated safely amidst the storm.)"
+                image: "image_6.png",
+                teluguSentences: [
+                    "నలభై పగలు మరియు నలభై రాత్రులు భయంకరమైన వర్షం భూమిపై కురిసింది.",
+                    "వరద నీరు పెరిగి, ఎత్తైన పర్వతాలను కూడా ముంచేసింది.",
+                    "కానీ, ఆ భయంకరమైన తుఫాను మధ్యలో, నోవహు ఓడ సురక్షితంగా నీటిపై తేలియాడింది."
+                ],
+                english: "Torrential rain fell for 40 days. But Noah and those in the ark floated safely amidst the storm."
             },
             {
-                // Scene 4: The Dove and the Olive Leaf
-                // Scenario: The rain has stopped. The ark rests on a rocky mountain peak (Ararat). A white dove flies towards the ark, carrying a bright green olive leaf in its beak under a clearing sky.
-                image: "https://placehold.co/900x400/87CEEB/FFFFFF?text=Scenario:+Rain+stopped,+Ark+on+mountain+peak.+Dove+returning+with+olive+leaf",
-                telugu: "నూట యాభై రోజుల తరువాత నీరు తగ్గడం ప్రారంభమైంది, మరియు ఓడ అరారాతు పర్వతాలపై నిలిచింది. మరికొన్ని రోజుల తర్వాత, నేల ఆరిపోయిందో లేదో తెలుసుకోవడానికి నోవహు ఓడ కిటికీలోంచి ఒక పావురాన్ని బయటకు పంపాడు. సాయంకాలానికి ఆ పావురం తన నోట ఒక పచ్చి ఒలీవ ఆకును తుంచుకొని అతని దగ్గరకు తిరిగి వచ్చింది. అది చూసి నోవహుకు భూమిపై నీరు తగ్గిపోయిందని, కొత్త మొక్కలు మొలుస్తున్నాయని నిర్ధారణ అయ్యింది.",
-                english: "(Summary: The water receded, and the ark rested on a mountain. Noah sent out a dove, which returned with a fresh olive leaf, proving the land was drying and life was returning.)"
+                image: "image_7.png",
+                teluguSentences: [
+                    "వర్షం ఆగి, నీరు తగ్గిన తర్వాత, నోవహు ఒక పావురాన్ని బయటకు పంపాడు.",
+                    "సాయంకాలానికి ఆ పావురం ఒక పచ్చి ఒలీవ ఆకుతో తిరిగి వచ్చింది.",
+                    "అది చూసి నోవహుకు భూమిపై నీరు తగ్గిపోయిందని తెలిసింది."
+                ],
+                english: "The rain stopped. A dove returned with an olive leaf, proving life was returning."
             },
             {
-                // Scene 5: The Rainbow Covenant
-                // Scenario: Noah and his family stand on dry land next to an altar, looking up at the sky. A brilliant, full rainbow arches across the clouds over the resting ark in the background.
-                image: "https://placehold.co/900x400/FFD700/000000?text=Scenario:+Noah's+family+on+dry+land+looking+at+a+brilliant+Rainbow+in+the+sky",
-                telugu: "దేవుని ఆజ్ఞ మేరకు అందరూ ఓడ నుండి బయటకు వచ్చారు. నోవహు దేవునికి కృతజ్ఞతగా ఒక బలిపీఠము కట్టాడు. దేవుడు వారిని ఆశీర్వదించి, 'ఇకపై ఎన్నడూ జలప్రళయముతో సమస్త శరీరులను నాశనము చేయను' అని వాగ్దానం చేశాడు. ఈ శాశ్వతమైన నిబంధనకు గుర్తుగా, దేవుడు ఆకాశంలోని మేఘాలలో ఒక అందమైన ఇంద్రధనస్సును ఉంచాడు.",
-                english: "(Summary: They exited the ark and thanked God. God blessed them and promised never to destroy the earth by flood again, placing a rainbow in the sky as the sign of His covenant.)"
+                image: "image_8.png",
+                teluguSentences: [
+                    "నోవహు మరియు అతని కుటుంబం ఓడ నుండి బయటకు వచ్చారు.",
+                    "దేవుడు వారిని ఆశీర్వదించి, ఇకపై ఎన్నడూ జలప్రళయమును పంపనని వాగ్దానం చేశాడు.",
+                    "దీనికి గుర్తుగా, దేవుడు ఆకాశంలో ఇంద్రధనస్సును ఉంచాడు."
+                ],
+                english: "God blessed them and promised never to flood the earth again, placing a rainbow as a sign."
             }
         ];
 
-        // ==========================================
-        // JAVASCRIPT LOGIC
-        // ==========================================
+        // VARIABLES
         let currentSceneIndex = 0;
+        let sentenceIndex = 0;
         const synth = window.speechSynthesis;
-        const voiceSelect = document.getElementById('voiceSelect');
-        const storyImage = document.getElementById('story-image');
+        
         const teluguCaption = document.getElementById('telugu-caption');
         const englishSub = document.getElementById('english-sub');
+        const storyImage = document.getElementById('story-image');
         const startBtn = document.getElementById('start-btn');
         const nextBtn = document.getElementById('next-btn');
-        const voiceInfoNote = document.getElementById('voice-info-note');
-        
-        let voices = [];
-        let selectedTeluguVoice = null;
+        const voiceStatus = document.getElementById('voice-status');
 
-        // 1. SMART VOICE LOADING FUNCTION
-        function populateVoices() {
-            voices = synth.getVoices();
-            voiceSelect.innerHTML = '';
-            let teluguVoicesFound = [];
+        let selectedVoice = null;
 
-            // Filter for Telugu voices
-            voices.forEach((voice) => {
-                if(voice.lang.includes('te')) {
-                    teluguVoicesFound.push(voice);
-                }
-            });
-
-            if (teluguVoicesFound.length === 0) {
-                // No Telugu voices found at all
-                const option = document.createElement('option');
-                option.textContent = "No specific Telugu voice found on device.";
-                voiceSelect.appendChild(option);
-                voiceInfoNote.textContent = "Warning: Your device does not have a Telugu text-to-speech engine installed. It will try to read using a default voice.";
-                voiceInfoNote.style.color = "red";
+        // 1. VOICE LOADING LOGIC
+        function loadVoices() {
+            const voices = synth.getVoices();
+            // Look for Telugu
+            const teVoice = voices.find(v => v.lang.includes('te'));
+            
+            if (teVoice) {
+                selectedVoice = teVoice;
+                voiceStatus.textContent = "✅ Telugu Voice Active: " + teVoice.name;
+                voiceStatus.className = "status-ok";
             } else {
-                // Telugu voices found - try to find the best "female" sounding one
-                // Google voices on Android/Chrome usually sound female and high quality.
-                let bestVoice = teluguVoicesFound.find(v => v.name.includes('Google') && v.lang.includes('te-IN')) || 
-                                teluguVoicesFound.find(v => v.name.toLowerCase().includes('female')) ||
-                                teluguVoicesFound[0]; // Fallback to the first one found
-
-                selectedTeluguVoice = bestVoice;
-
-                // Populate dropdown
-                teluguVoicesFound.forEach(voice => {
-                    const option = document.createElement('option');
-                    let label = `${voice.name} (${voice.lang})`;
-                    if (voice === bestVoice) {
-                         label = `🌟 BEST MATCH: ${label}`;
-                         option.style.fontWeight = "bold";
-                         option.selected = true;
-                    }
-                    option.textContent = label;
-                    option.value = voice.name;
-                    voiceSelect.appendChild(option);
-                });
-
-                 voiceInfoNote.textContent = `Ready. Using voice: ${selectedTeluguVoice.name}. (Ensure volume is up)`;
-                 voiceInfoNote.style.color = "#27ae60";
+                // If no Telugu, find any Indian English voice or default
+                const inVoice = voices.find(v => v.lang.includes('IN')) || voices[0];
+                selectedVoice = inVoice;
+                voiceStatus.textContent = "⚠️ No Telugu Voice found on device. Using: " + (inVoice ? inVoice.name : "Default");
+                voiceStatus.className = "status-err";
             }
         }
 
-        // Browser voice loading is asynchronous, we need to wait for it.
-        populateVoices();
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = populateVoices;
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
         }
+        loadVoices();
 
-        // 2. SPEAK FUNCTION
-        function speak(text) {
-            if (synth.speaking) {
-                synth.cancel(); // Stop whatever is currently speaking
-            }
-            
-            const utterThis = new SpeechSynthesisUtterance(text);
-            
-            // If we found a Telugu voice, use it.
-            if (selectedTeluguVoice) {
-                utterThis.voice = selectedTeluguVoice;
-            }
-            
-            // Adjustments for storytelling clarity
-            // Slightly slower rate for detailed text
-            utterThis.rate = 0.85; 
-            // Pitch adjustment (trying to make it sound slightly softer/more feminine if the engine allows)
-            utterThis.pitch = 1.1; 
-
-            // Event to enable the "Next" button only when speaking finishes
-            utterThis.onend = function() {
-                 if (currentSceneIndex < storyData.length - 1) {
+        // 2. SPEAKING LOGIC (Sentence by Sentence)
+        function speakSentenceArray(sentences) {
+            if (sentenceIndex >= sentences.length) {
+                // All sentences in this scene finished
+                if (currentSceneIndex < storyData.length - 1) {
                     nextBtn.disabled = false;
-                 }
+                    nextBtn.textContent = "Next Scene ➡";
+                } else {
+                    nextBtn.textContent = "Story Finished";
+                }
+                return;
+            }
+
+            // Update text on screen to match what is being spoken
+            teluguCaption.textContent = sentences[sentenceIndex];
+            
+            const utterThis = new SpeechSynthesisUtterance(sentences[sentenceIndex]);
+            utterThis.lang = 'te-IN'; // Force Language Tag
+            if (selectedVoice) {
+                utterThis.voice = selectedVoice;
+            }
+            utterThis.rate = 0.9;
+            utterThis.pitch = 1.0;
+
+            utterThis.onend = function() {
+                sentenceIndex++;
+                speakSentenceArray(sentences); // Recursive call for next sentence
             };
 
             synth.speak(utterThis);
         }
 
-        // 3. STORY FLOW LOGIC
+        // 3. SCENE CONTROL
         function loadScene(index) {
-            nextBtn.disabled = true; // Disable next until audio finishes
-
             if (index >= storyData.length) {
-                finishStory();
                 return;
             }
+            
+            // Reset for new scene
+            sentenceIndex = 0;
+            synth.cancel();
+            nextBtn.disabled = true;
+            nextBtn.textContent = "Playing Audio...";
 
             const scene = storyData[index];
 
-            // Fade effect for image
-            storyImage.style.opacity = 0;
-            setTimeout(() => {
-                storyImage.src = scene.image;
-                storyImage.style.opacity = 1;
-            }, 300);
+            // Update Image and Static Text
+            storyImage.src = scene.image;
+            englishSub.textContent = scene.english;
 
-            // Update Text
-            teluguCaption.style.opacity = 0;
-            setTimeout(() => {
-                 teluguCaption.textContent = scene.telugu;
-                 englishSub.textContent = scene.english;
-                 teluguCaption.style.opacity = 1;
-                 // Trigger Audio after text is visible
-                 speak(scene.telugu);
-            }, 300);
-
-
-            // Update Button Text for last scene
-            if (index === storyData.length - 1) {
-                nextBtn.textContent = "Finish Story (Wait for audio)";
-            } else {
-                nextBtn.textContent = "Next Scene ➡ (Wait for audio)";
-            }
+            // Start Speaking
+            speakSentenceArray(scene.teluguSentences);
         }
 
         function startStory() {
-            // Important: Audio needs user interaction first
-            if (synth.notAllowedError) {
-                 alert("Audio autoplay is blocked. Please interact with the page.");
-                 return;
-            }
             startBtn.style.display = 'none';
-            nextBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'block';
             currentSceneIndex = 0;
             loadScene(currentSceneIndex);
         }
@@ -375,15 +275,6 @@
             loadScene(currentSceneIndex);
         }
 
-        function finishStory() {
-            storyImage.src = "https://placehold.co/900x400/2c3e50/FFFFFF?text=The+End+-+కథ+సమాప్తం";
-            teluguCaption.textContent = "ఈ విధంగా, నోవహు విశ్వాసం ద్వారా మానవజాతి మరియు జంతుజాలం రక్షించబడ్డాయి. (కథ సమాప్తం)";
-            englishSub.textContent = "Thus, through Noah's faith, mankind and animal kind were saved. (Story Finished)";
-            nextBtn.style.display = 'none';
-            startBtn.style.display = 'inline-block';
-            startBtn.textContent = "Replay Story ↻";
-            synth.cancel();
-        }
     </script>
 </body>
 </html>
